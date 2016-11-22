@@ -7,7 +7,7 @@ project(com_sensics_usb_monitor)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 # set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
-option(BUILD_SHARED_LIBS ON)
+option(BUILD_SHARED_LIBS "Build Shared Libs" ON)
 
 set(EXPORT_BASENAME "OSVR_USBDETECTION")
 set(LIBNAME_FULL "osvrUSBDetection")
