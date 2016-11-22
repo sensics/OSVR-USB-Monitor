@@ -1,0 +1,52 @@
+#
+# OSVR Central Libraries
+#
+cmake_minimum_required(VERSION 3.0)
+project(com_sensics_usb_monitor)
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+option(BUILD_SHARED_LIBS ON)
+
+set(OSVR_INCLUDE_DIR CACHE PATH "Path to OSVR include dir")
+
+set(EXPORT_BASENAME "OSVR_USBDETECTION")
+set(LIBNAME_FULL "osvrUSBDetection")
+
+include(PlatformDefinitions)
+define_platform_macros(OSVR)
+
+configure_file("Export.h.in"
+    Export.h
+    @ONLY NEWLINE_STYLE LF)
+    
+configure_file(PlatformConfig.h.in 
+                "${CMAKE_CURRENT_BINARY_DIR}/PlatformConfig.h")
+
+if(WIN32)
+    find_package(WinHID REQUIRED)
+    find_package(WindowsSDK REQUIRED)
+endif()
+
+include_directories(${OSVR_INCLUDE_DIR})
+
+set(API USBDetectionC.h)
+set(SOURCES USBDetection.h
+            USBDetectionC.cpp
+            USBCallbackTypesC.h
+            USBDeviceC.h
+            USBReturnCodesC.h
+            "${CMAKE_CURRENT_BINARY_DIR}/Export.h"
+            "${CMAKE_CURRENT_BINARY_DIR}/PlatformConfig.h")
+            
+add_library(${LIBNAME_FULL} 
+            ${API}
+            ${SOURCES})
+target_link_libraries(${LIBNAME_FULL}
+                    ${WINHID_LIBRARIES})
+                    
+add_executable(USBDetectionExampleC
+                USBDetectionExampleC.c)
+
+target_link_libraries(USBDetectionExampleC 
+                    PRIVATE ${LIBNAME_FULL})
