@@ -42,15 +42,15 @@ void osvrUSBDetectionStartMonitor(OSVR_USBMonitor monitor) {
     monitor->startMonitor();
 }
 
-USB_ReturnCode osvrUSBDetectionMonitorUpdate(OSVR_USBMonitor monitor,
+USB_StatusCode osvrUSBDetectionMonitorUpdate(OSVR_USBMonitor monitor,
                                              OSVR_USBDeviceDescriptor *dev) {
 
     return monitor->checkMessages(dev);
 }
 
-OSVR_ReturnCode osvrUSBDetectionStopMonitor(OSVR_USBMonitor monitor) {
+USB_ReturnCode osvrUSBDetectionStopMonitor(OSVR_USBMonitor monitor) {
 
-    return OSVR_RETURN_SUCCESS;
+    return USB_RETURN_SUCCESS;
 }
 
 void osvrUSBDetectionMonitorShutdown(OSVR_USBMonitor monitor) {
@@ -83,14 +83,14 @@ void osvrUSBDetectionFreeDeviceList(OSVR_USBDeviceDescriptor **devices,
     free(devices);
 }
 
-OSVR_ReturnCode osvrUSBDetectionRegisterDeviceAddedCallback(
+USB_ReturnCode osvrUSBDetectionRegisterDeviceAddedCallback(
     OSVR_USBMonitor monitor, OSVR_DeviceAddedCallback cb, void *userdata) {
     monitor->registerDeviceAddedCallback(cb, userdata);
-    return OSVR_RETURN_SUCCESS;
+    return USB_RETURN_SUCCESS;
 }
 
-OSVR_ReturnCode osvrUSBDetectionRegisterDeviceRemovedCallback(
+USB_ReturnCode osvrUSBDetectionRegisterDeviceRemovedCallback(
     OSVR_USBMonitor monitor, OSVR_DeviceRemovedCallback cb, void *userdata) {
     monitor->registerDeviceRemovedCallback(cb, userdata);
-    return OSVR_RETURN_SUCCESS;
+    return USB_RETURN_SUCCESS;
 }

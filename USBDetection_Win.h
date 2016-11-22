@@ -110,7 +110,7 @@ struct OSVR_USBMonitorObject {
         }
     }
 
-    OSVR_USBDETECTION_EXPORT USB_ReturnCode
+    OSVR_USBDETECTION_EXPORT USB_StatusCode
     checkMessages(OSVR_USBDeviceDescriptor *dev) {
         MSG msg;
         bool havePendingMsgs =
@@ -332,7 +332,7 @@ struct OSVR_USBMonitorObject {
     OSVR_DeviceRemovedCallback m_removedCb;
     HWND hWnd;
     OSVR_USBDeviceDescriptor m_device;
-    USB_ReturnCode m_status;
+    USB_StatusCode m_status;
 };
 
 #endif // INCLUDED_USBDetection_Win_h_GUID_49312DF7_61D5_4888_4724_EF81D0A6F99E

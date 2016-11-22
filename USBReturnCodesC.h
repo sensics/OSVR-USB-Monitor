@@ -38,11 +38,20 @@
 extern "C" {
 #endif
 
+#define USB_RETURN_SUCCESS (0)
+#define USB_RETURN_FAILURE (1)
+
+#ifndef USB_RETURN_SUCCESS_CONDITION
+#define USB_RETURN_SUCCESS_CONDITION(X)
+#endif
+typedef USB_RETURN_SUCCESS_CONDITION(
+    return == OSVR_RETURN_SUCCESS) char USB_ReturnCode;
+
 typedef enum {
     OSVR_USB_NO_STATUS_CHANGE,
     OSVR_USB_DEVICE_ADDED,
     OSVR_USB_DEVICE_REMOVED
-} USB_ReturnCode;
+} USB_StatusCode;
 
 #ifdef __cplusplus
 }

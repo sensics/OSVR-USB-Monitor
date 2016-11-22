@@ -26,7 +26,6 @@
 #define INCLUDED_USBDetectionC_h_GUID_04543989_122A_4FA3_21EF_EE8B921D272A
 
 // Internal Includes
-#include <osvr/Util/ReturnCodesC.h>
 #include "USBCallbackTypesC.h"
 #include "USBDeviceC.h"
 #include "USBReturnCodesC.h"
@@ -52,33 +51,42 @@ osvrUSBDetectionStartMonitor(OSVR_USBMonitor monitor);
 
 /* @brief Shuts down USB Monitor and destroys the associated object and
  * pointer*/
-OSVR_USBDETECTION_EXPORT OSVR_ReturnCode
+OSVR_USBDETECTION_EXPORT USB_ReturnCode
 osvrUSBDetectionStopMonitor(OSVR_USBMonitor monitor);
 
 /* @brief Checks if there is a USB event and will save info to device
 descriptor.
-If such an event occurs, its return code will tell you if device has been
+If such an event occurs, its status code will tell you if device has been
 added/removed or no change.
 */
-OSVR_USBDETECTION_EXPORT USB_ReturnCode osvrUSBDetectionMonitorUpdate(
+OSVR_USBDETECTION_EXPORT USB_StatusCode osvrUSBDetectionMonitorUpdate(
     OSVR_USBMonitor monitor, OSVR_USBDeviceDescriptor *dev);
 
+/* @brief Shuts down the USB monitor and cleans up*/
 OSVR_USBDETECTION_EXPORT void
 osvrUSBDetectionMonitorShutdown(OSVR_USBMonitor monitor);
 
+/* @brief Returns number of USB devices that are connected and populates the
+ * provided list of device descriptors. Must call free device list before
+ * calling again*/
 OSVR_USBDETECTION_EXPORT size_t osvrUSBDetectionGetDeviceList(
     OSVR_USBMonitor monitor, OSVR_USBDeviceDescriptor ***list);
 
+/* @brief Cleans up a list of device descriptors */
 OSVR_USBDETECTION_EXPORT void
 osvrUSBDetectionFreeDeviceList(OSVR_USBDeviceDescriptor **devices,
                                size_t numDevices);
 
-OSVR_USBDETECTION_EXPORT OSVR_ReturnCode
+/* @brief Registers a callback for notifications when a new USB device is added
+ * to a system. Must be called before osvrUSBDetectionStartMonitor */
+OSVR_USBDETECTION_EXPORT USB_ReturnCode
 osvrUSBDetectionRegisterDeviceAddedCallback(OSVR_USBMonitor monitor,
                                             OSVR_DeviceAddedCallback cb,
                                             void *userdata);
 
-OSVR_USBDETECTION_EXPORT OSVR_ReturnCode
+/* @brief Registers a callback for notifications when any USB device is removed
+ * a system. Must be called before osvrUSBDetectionStartMonitor */
+OSVR_USBDETECTION_EXPORT USB_ReturnCode
 osvrUSBDetectionRegisterDeviceRemovedCallback(OSVR_USBMonitor monitor,
                                               OSVR_DeviceRemovedCallback cb,
                                               void *userdata);
