@@ -47,3 +47,6 @@ add_executable(USBDetectionExampleC
 
 target_link_libraries(USBDetectionExampleC
                     PRIVATE ${LIBNAME_FULL})
+
+install(TARGETS ${LIBNAME_FULL}
+        RUNTIME DESTINATION ./)
